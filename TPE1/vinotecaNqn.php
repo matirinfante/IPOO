@@ -1,5 +1,14 @@
 <?php
+/**
+ * Autor: Matias Ricardo Infante Contreras
+ * Legajo: FAI-1392
+ */
 
+
+/** CalcStock se encarga de, en base a un arreglo dado, crear otro arreglo con el stock total de botellas y el promedio de precios total.
+ * @param $array , un arreglo asociativo representando a la vinoteca
+ * @return array $calcVinos arreglo conteniendo el stock total de botellas y precio promedio total por cada variedad.
+ */
 function calcStock($array)
 {
     $calcVinos = array();
@@ -15,6 +24,9 @@ function calcStock($array)
     return $calcVinos;
 }
 
+/**
+ *Carga de la estructura vinoteca y muestra por consola del arreglo resultante en calcStock.
+ */
 function main()
 {
     $vinoteca = array();
