@@ -21,7 +21,7 @@ class Teatro
     }
 
     /**
-     * @return mixed
+     * @return $nombre
      */
     public function getNombre()
     {
@@ -29,7 +29,7 @@ class Teatro
     }
 
     /**
-     * @param mixed $nombre
+     * @param string $nombre
      */
     public function setNombre($nombre): void
     {
@@ -37,7 +37,7 @@ class Teatro
     }
 
     /**
-     * @return mixed
+     * @return $direccion
      */
     public function getDireccion()
     {
@@ -45,7 +45,7 @@ class Teatro
     }
 
     /**
-     * @param mixed $direccion
+     * @param string $direccion
      */
     public function setDireccion($direccion): void
     {
@@ -53,15 +53,19 @@ class Teatro
     }
 
     /**
-     * @return mixed
+     * @return $funcion array
      */
     public function getFuncion($index)
     {
         return $this->funciones[$index];
     }
 
+
     /**
-     * @param mixed $funciones
+     * @param $index
+     * @param $nombre
+     * @param $precio
+     * @return false|string
      */
     public function setFuncion($index, $nombre, $precio)
     {
@@ -75,6 +79,9 @@ class Teatro
         return $error;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $text = "Nombre teatro: {$this->nombre}\nDireccion: {$this->direccion}\nFunciones disponibles:\n";

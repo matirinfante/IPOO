@@ -1,6 +1,10 @@
 <?php
 include "Teatro.php";
 
+/**
+ * @param $cargado
+ * @param $unTeatro
+ */
 function menu($cargado, &$unTeatro)
 {
     do {
@@ -40,6 +44,10 @@ function menu($cargado, &$unTeatro)
     } while ($opcion <> 2 and $opcion <> 3);
 }
 
+/**
+ * @param $unTeatro
+ * @return bool
+ */
 function cargaDatos(&$unTeatro)
 {
     $nombreTeatro = "";
@@ -73,6 +81,9 @@ function cargaDatos(&$unTeatro)
     return $exito;
 }
 
+/**
+ * @param $unTeatro
+ */
 function modificarDatos($unTeatro)
 {
     $opcionMod = -1;
@@ -100,6 +111,9 @@ function modificarDatos($unTeatro)
     } while ($opcionMod <> 4);
 }
 
+/**
+ * @param $unTeatro
+ */
 function modificarTeatro(&$unTeatro)
 {
     echo "--- MODIFICAR NOMBRE TEATRO ---\n";
@@ -108,6 +122,9 @@ function modificarTeatro(&$unTeatro)
     $unTeatro->setNombre($nombreIngresado);
 }
 
+/**
+ * @param $unTeatro
+ */
 function modificarDireccion(&$unTeatro)
 {
     echo "--- MODIFICAR DIRECCION TEATRO ---\n";
@@ -116,6 +133,9 @@ function modificarDireccion(&$unTeatro)
     $unTeatro->setDireccion($direccionIngresado);
 }
 
+/**
+ * @param $unTeatro
+ */
 function modificarFunciones(&$unTeatro)
 {
     $numeroFuncion = -1;
@@ -142,11 +162,17 @@ function modificarFunciones(&$unTeatro)
     $unTeatro->setFuncion($numeroFuncion - 1, $nombreFuncion, $precioFuncion);
 }
 
+/**
+ * @param $unTeatro
+ */
 function mostrarDatos($unTeatro)
 {
     echo $unTeatro->__toString();
 }
 
+/**
+ *
+ */
 function main()
 {
 
