@@ -24,7 +24,7 @@ class Musical extends Funcion
     /**
      * @param mixed $director
      */
-    public function setDirector($director): void
+    public function setDirector($director)
     {
         $this->director = $director;
     }
@@ -40,7 +40,7 @@ class Musical extends Funcion
     /**
      * @param mixed $cantPersonas
      */
-    public function setCantPersonas($cantPersonas): void
+    public function setCantPersonas($cantPersonas)
     {
         $this->cantPersonas = $cantPersonas;
     }
@@ -50,7 +50,7 @@ class Musical extends Funcion
         return parent::calcCosto() * 1.12;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         $text = parent::__toString();
         $text .= "Director:{$this->getDirector()}\nPersonas en Escena:{$this->getCantPersonas()}\n";

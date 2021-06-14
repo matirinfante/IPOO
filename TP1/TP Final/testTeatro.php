@@ -242,7 +242,7 @@ function mostrarDatos($unTeatro)
 function main()
 {
 
-    $unTeatro = new Teatro("Cinepolis", "Argentina 1234");
+    $unTeatro = new Teatro();
     $cargado = false;
     menu($cargado, $unTeatro);
 }
