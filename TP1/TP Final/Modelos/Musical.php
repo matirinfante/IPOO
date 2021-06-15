@@ -17,7 +17,7 @@ class Musical extends Funcion
     {
         parent::cargar($datos);
         $this->setDirector($datos['director']);
-        $this->setCantPersonas($datos['cant_personas']);
+        $this->setCantPersonas($datos['cantidad_personas']);
     }
 
     /**
@@ -132,7 +132,7 @@ class Musical extends Funcion
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE musical SET director={$this->getDirector()}, cantidad_personas={$this->getCantPersonas()} 
+        $consultaModifica = "UPDATE musical SET director='{$this->getDirector()}', cantidad_personas='{$this->getCantPersonas()}' 
         WHERE idfuncion =" . parent::getIdfuncion();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consultaModifica)) {

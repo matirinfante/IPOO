@@ -6,6 +6,7 @@ class ABM_Teatral
 {
     public static function altaTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro)
     {
+        $idInsercion = -1;
         $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro);
         $nuevoTeatral = new FuncionTeatral();
         $nuevoTeatral->cargar($arr);
@@ -14,8 +15,10 @@ class ABM_Teatral
         if ($teatroVinculado->buscar($idteatro)) {
             if ($teatroVinculado->insertarFuncion($nuevoTeatral)) {
                 $nuevoTeatral->insertar();
+                $idInsercion = $nuevoTeatral->getIdfuncion();
             }
         }
+        return $idInsercion;
     }
 
     public static function bajaTeatral($idfuncion)

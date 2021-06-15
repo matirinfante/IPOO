@@ -128,7 +128,7 @@ class Cine extends Funcion
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE cine SET genero={$this->getGenero()}, pais_origen={$this->getPaisOrigen()} 
+        $consultaModifica = "UPDATE cine SET genero={'$this->getGenero()}', pais_origen='{$this->getPaisOrigen()}' 
         WHERE idfuncion =" . parent::getIdfuncion();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consultaModifica)) {
@@ -147,7 +147,6 @@ class Cine extends Funcion
         $base = new BaseDatos();
         $resp = false;
         if ($base->Iniciar()) {
-            print ("pasa borrar cine\n");
             $qryDelete = "DELETE FROM cine WHERE idfuncion=" . parent::getIdfuncion();
             if ($base->Ejecutar($qryDelete)) {
                 $resp = true;

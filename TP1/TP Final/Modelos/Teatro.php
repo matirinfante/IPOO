@@ -31,6 +31,8 @@ class Teatro
         $this->setIdteatro($idteatro);
         $this->setNombre($nombre);
         $this->setDireccion($direccion);
+
+        $this->actualizarFunciones();
     }
 
     /**
@@ -91,7 +93,21 @@ class Teatro
 
     public function getFunciones()
     {
+        $this->actualizarFunciones();
         return $this->funciones;
+    }
+
+    private function actualizarFunciones()
+    {
+        $objCine = new Cine();
+        $objMusical = new Musical();
+        $objTeatral = new FuncionTeatral();
+
+        $funcionCine = $objCine->listar("c.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
+        $funcionMusical = $objMusical->listar("m.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
+        $funcionTeatral = $objTeatral->listar("f.idteatro={$this->getIdteatro()}");
+
+        $this->setFunciones(array_merge($funcionCine, $funcionMusical, $funcionTeatral));
     }
 
     public function setFunciones($arr)
@@ -110,9 +126,9 @@ class Teatro
      * @param $precio
      * @return bool
      */
-    public function modificarFuncion($nombreFuncion, $nombreNuevo, $precio)
+    public function modificarFuncion($idfuncion, $nombreNuevo, $precio)
     {
-        $tempFuncion = $this->buscarFuncion($nombreFuncion);
+        $tempFuncion = $this->buscarFuncion($idfuncion);
 
         if (!is_null($tempFuncion)) {
             $tempFuncion->setNombre($nombreNuevo);
@@ -160,12 +176,12 @@ class Teatro
      * @param $nombreFuncion
      * @return bool
      */
-    public function buscarCoincidencias($nombreFuncion)
+    public function buscarCoincidencias($idfuncion)
     {
         $existe = false;
-        foreach ($this->funciones as $funcion) {
+        foreach ($this->getFunciones() as $funcion) {
 
-            if (strtolower($funcion->getNombre()) == $nombreFuncion) {
+            if (strtolower($funcion->getIdFuncion()) == $idfuncion) {
                 $existe = true;
                 break;
             }
@@ -177,11 +193,11 @@ class Teatro
      * @param $nombreFuncion
      * @return object
      */
-    public function buscarFuncion($nombreFuncion)
+    public function buscarFuncion($idfuncion)
     {
         $funcionEncontrada = null;
-        foreach ($this->funciones as $funcion) {
-            if (strtolower($funcion->getNombre()) == $nombreFuncion) {
+        foreach ($this->getFunciones() as $funcion) {
+            if (strtolower($funcion->getIdFuncion()) == $idfuncion) {
                 $funcionEncontrada = $funcion;
                 break;
             }
@@ -248,15 +264,6 @@ class Teatro
 
                     $this->cargar($idteatro, $row2['nombre'], $row2['direccion']);
 
-                    $objCine = new Cine();
-                    //$objMusical = new Musical();
-                    //$objTeatral = new FuncionTeatral();
-
-                    $funcionCine = $objCine->listar("c.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
-                    //$funcionMusical = $objMusical->listar("idteatro={$this->getIdteatro()}");
-                    //$funcionTeatral = $objTeatral->listar("idteatro={$this->getIdteatro()}");
-                    //$funcionMusical, $funcionTeatral
-                    $this->setFunciones($funcionCine);
                     $resp = true;
                 }
             } else {
@@ -320,7 +327,7 @@ class Teatro
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE teatro SET nombre={$this->getNombre()},direccion={$this->getDireccion()} WHERE idteatro = {$this->getIdteatro()}";
+        $consultaModifica = "UPDATE teatro SET nombre='{$this->getNombre()}',direccion='{$this->getDireccion()}' WHERE idteatro = {$this->getIdteatro()}";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consultaModifica)) {
                 $resp = true;
@@ -365,7 +372,7 @@ class Teatro
      */
     public function __toString()
     {
-        $text = "Nombre teatro: {$this->getNombre()}\nDireccion: {$this->getDireccion()}\nFunciones disponibles:\n";
+        $text = "ID:{$this->getIdteatro()}\nNombre teatro: {$this->getNombre()}\nDireccion: {$this->getDireccion()}\nFunciones disponibles:\n";
         $text .= $this->mostrarFunciones();
 
         return $text;

@@ -10,13 +10,15 @@ class ABM_Teatro
         $nuevoTeatro = new Teatro();
         $nuevoTeatro->cargar(0, $nombre, $direccion);
         $nuevoTeatro->insertar();
+
+        return $nuevoTeatro->getIdteatro();
     }
 
     public static function modificarTeatro($idteatro, $nombre, $direccion)
     {
         $teatroModificar = new Teatro();
         $resp = $teatroModificar->buscar($idteatro);
-
+        print("HOLA:__ {$resp}");
         if ($resp) {
             $teatroModificar->setNombre($nombre);
             $teatroModificar->setDireccion($direccion);
@@ -28,7 +30,6 @@ class ABM_Teatro
     {
         $teatroEliminar = new Teatro();
         $resp = $teatroEliminar->buscar($idteatro);
-        var_dump($resp);
 
         if ($resp) {
             $teatroEliminar->eliminar();

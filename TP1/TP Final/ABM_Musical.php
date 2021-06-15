@@ -6,7 +6,8 @@ class ABM_Musical
 {
     public static function altaMusical($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro, $director, $cantPersonas)
     {
-        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'director' => $director, 'cant_personas' => $cantPersonas);
+        $idInsertado = -1;
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'director' => $director, 'cantidad_personas' => $cantPersonas);
         $nuevomusical = new Musical();
         $nuevomusical->cargar($arr);
 
@@ -14,8 +15,10 @@ class ABM_Musical
         if ($teatroVinculado->buscar($idteatro)) {
             if ($teatroVinculado->insertarFuncion($nuevomusical)) {
                 $nuevomusical->insertar();
+                $idInsertado = $nuevomusical->getIdfuncion();
             }
         }
+        return $idInsertado;
     }
 
     public static function bajaMusical($idfuncion)
