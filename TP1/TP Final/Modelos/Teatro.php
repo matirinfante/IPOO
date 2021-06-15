@@ -91,7 +91,6 @@ class Teatro
 
     public function getFunciones()
     {
-        $this->funciones = Funcion::listar("idteatro={$this->getIdteatro()}");
         return $this->funciones;
     }
 
@@ -149,9 +148,7 @@ class Teatro
     public function mostrarFunciones()
     {
         $text = "";
-        print_r($this->getFunciones());
         foreach ($this->getFunciones() as $funcion) {
-            print("pasa\n");
             $text .= "**********\n";
             $text .= $funcion->__toString();
             $text .= "**********\n";
@@ -204,7 +201,6 @@ class Teatro
         $horaFinalizacionEnMinutos = $horaEnMinutos + (int)$duracion;
 
         foreach ($this->getFunciones() as $funcion) {
-            print_r($this->getFunciones());
             $horaAComparar = $this->aMinutos($funcion->getHoraInicio());
             $horaFinalAComparar = $horaAComparar + $funcion->getDuracion();
 
@@ -245,9 +241,22 @@ class Teatro
         $consultaTeatro = "SELECT * FROM teatro WHERE idteatro={$idteatro}";
         $resp = false;
         if ($base->Iniciar()) {
+
             if ($base->Ejecutar($consultaTeatro)) {
+
                 if ($row2 = $base->Registro()) {
+
                     $this->cargar($idteatro, $row2['nombre'], $row2['direccion']);
+
+                    $objCine = new Cine();
+                    //$objMusical = new Musical();
+                    //$objTeatral = new FuncionTeatral();
+
+                    $funcionCine = $objCine->listar("c.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
+                    //$funcionMusical = $objMusical->listar("idteatro={$this->getIdteatro()}");
+                    //$funcionTeatral = $objTeatral->listar("idteatro={$this->getIdteatro()}");
+                    //$funcionMusical, $funcionTeatral
+                    $this->setFunciones($funcionCine);
                     $resp = true;
                 }
             } else {
@@ -259,7 +268,7 @@ class Teatro
         return $resp;
     }
 
-    public static function listar($condicion = "")
+    public function listar($condicion = "")
     {
         $arrTeatros = null;
         $base = new BaseDatos();
@@ -326,11 +335,14 @@ class Teatro
 
     public function eliminar()
     {
+
         $base = new BaseDatos();
         $resp = false;
         if ($base->Iniciar()) {
             $arrTeatros = $this->getFunciones();
+
             if (count($arrTeatros) != 0) {
+
                 foreach ($arrTeatros as $funcion) {
                     $funcion->eliminar();
                 }

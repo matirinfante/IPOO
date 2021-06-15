@@ -10,10 +10,9 @@ function main()
 {
     $obj = new Teatro();
     ABM_Teatro::altaTeatro("Cinemark", "Dr ramon 123");
-    ABM_Cine::altaCine(null, "Godzilla", "12:30", 120, 200, 31, "Acción", "USA");
-    //$obj->cargar(null, "CINEMARK", "DR RAMON 123");
-    //$obj->insertar();
-    $obj->buscar(31);
+    ABM_Cine::altaCine(null, "Godzilla", "12:30", 120, 200, 74, "Acción", "USA");
+    $obj->buscar(74);
     echo $obj->__toString();
-
+    print ("ELIMINACION");
+    ABM_Teatro::eliminarTeatro(74);
 }

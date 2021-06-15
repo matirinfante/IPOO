@@ -165,7 +165,7 @@ class Funcion
         return $resp;
     }
 
-    public static function listar($condicion = "")
+    public function listar($condicion = "")
     {
         $arrFunciones = null;
         $base = new BaseDatos();

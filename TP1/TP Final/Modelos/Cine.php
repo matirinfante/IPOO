@@ -14,7 +14,6 @@ class Cine extends Funcion
         $this->paisOrigen = "";
     }
 
-    //TODO es un array
     public function cargar($datos)
     {
         parent::cargar($datos);
@@ -81,11 +80,11 @@ class Cine extends Funcion
         return $resp;
     }
 
-    public static function listar($condicion = "")
+    public function listar($condicion = "")
     {
         $arrCine = null;
         $base = new BaseDatos();
-        $consultaFuncion = "SELECT * FROM cine";
+        $consultaFuncion = "SELECT * FROM cine c, funcion f";
         if ($condicion != "") {
             $consultaFuncion = "{$consultaFuncion} WHERE {$condicion}";
         }
@@ -94,7 +93,7 @@ class Cine extends Funcion
                 $arrCine = array();
                 while ($row2 = $base->Registro()) {
                     $objCine = new Cine();
-                    $objCine->Buscar($row2['nrodoc']);
+                    $objCine->cargar($row2);
                     array_push($arrCine, $objCine);
                 }
             } else {
@@ -148,9 +147,11 @@ class Cine extends Funcion
         $base = new BaseDatos();
         $resp = false;
         if ($base->Iniciar()) {
+            print ("pasa borrar cine\n");
             $qryDelete = "DELETE FROM cine WHERE idfuncion=" . parent::getIdfuncion();
             if ($base->Ejecutar($qryDelete)) {
                 $resp = true;
+                parent::eliminar();
             } else {
                 $this->setmensajeoperacion($base->getError());
             }

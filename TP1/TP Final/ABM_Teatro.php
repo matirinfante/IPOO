@@ -28,6 +28,7 @@ class ABM_Teatro
     {
         $teatroEliminar = new Teatro();
         $resp = $teatroEliminar->buscar($idteatro);
+        var_dump($resp);
 
         if ($resp) {
             $teatroEliminar->eliminar();
