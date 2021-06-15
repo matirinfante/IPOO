@@ -18,7 +18,6 @@ class ABM_Teatro
     {
         $teatroModificar = new Teatro();
         $resp = $teatroModificar->buscar($idteatro);
-        print("HOLA:__ {$resp}");
         if ($resp) {
             $teatroModificar->setNombre($nombre);
             $teatroModificar->setDireccion($direccion);

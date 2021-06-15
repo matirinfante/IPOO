@@ -103,9 +103,9 @@ class Teatro
         $objMusical = new Musical();
         $objTeatral = new FuncionTeatral();
 
-        $funcionCine = $objCine->listar("c.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
-        $funcionMusical = $objMusical->listar("m.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()}");
-        $funcionTeatral = $objTeatral->listar("f.idteatro={$this->getIdteatro()}");
+        $funcionCine = $objCine->listar("c.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()} ORDER BY c.idfuncion ASC");
+        $funcionMusical = $objMusical->listar("m.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()} ORDER BY m.idfuncion ASC");
+        $funcionTeatral = $objTeatral->listar("t.idfuncion=f.idfuncion AND f.idteatro={$this->getIdteatro()} ORDER BY t.idfuncion ASC");
 
         $this->setFunciones(array_merge($funcionCine, $funcionMusical, $funcionTeatral));
     }

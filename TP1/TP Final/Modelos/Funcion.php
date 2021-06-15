@@ -222,7 +222,7 @@ class Funcion
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE funcion SET nombre={$this->getNombre()},hora_inicio={$this->getHoraInicio()},duracion={$this->getDuracion()},precio={$this->getPrecio()} 
+        $consultaModifica = "UPDATE funcion SET nombre='{$this->getNombre()}',hora_inicio='{$this->getHoraInicio()}',duracion={$this->getDuracion()},precio={$this->getPrecio()} 
         WHERE idfuncion = {$this->getIdfuncion()}";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consultaModifica)) {
@@ -256,7 +256,7 @@ class Funcion
 
     public function __toString()
     {
-        $text = "Nombre: {$this->getNombre()}\nPrecio: {$this->getPrecio()}\nHorario: {$this->getHoraInicio()}\nDuración: {$this->getDuracion()}\n";
+        $text = "ID:{$this->idfuncion}\nNombre: {$this->getNombre()}\nPrecio: {$this->getPrecio()}\nHorario: {$this->getHoraInicio()}\nDuración: {$this->getDuracion()}\n";
 
         return $text;
     }

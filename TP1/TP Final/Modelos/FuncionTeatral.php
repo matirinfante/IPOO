@@ -43,7 +43,7 @@ class FuncionTeatral extends Funcion
     {
         $arrCine = null;
         $base = new BaseDatos();
-        $consultaFuncion = "SELECT * FROM funcionteatral c, funcion f";
+        $consultaFuncion = "SELECT * FROM funcionteatral t, funcion f";
         if ($condicion != "") {
             $consultaFuncion = "{$consultaFuncion} WHERE {$condicion}";
         }
@@ -93,7 +93,6 @@ class FuncionTeatral extends Funcion
         $base = new BaseDatos();
         $resp = false;
         if ($base->Iniciar()) {
-            print ("pasa borrar cine\n");
             $qryDelete = "DELETE FROM funcionteatral WHERE idfuncion=" . parent::getIdfuncion();
             if ($base->Ejecutar($qryDelete)) {
                 $resp = true;
