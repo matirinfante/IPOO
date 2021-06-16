@@ -37,6 +37,16 @@ class Funcion
         $this->setObjTeatro($datos['idteatro']);
     }
 
+    public function cargarConObj($datos)
+    {
+        $this->setIdfuncion($datos['idfuncion']);
+        $this->setNombre($datos['nombre']);
+        $this->setHoraInicio($datos['hora_inicio']);
+        $this->setDuracion($datos['duracion']);
+        $this->setPrecio($datos['precio']);
+        $this->setObjTeatro($datos['objteatro']);
+    }
+
     /**
      * @return int
      */
@@ -153,7 +163,8 @@ class Funcion
                 if ($row2 = $base->Registro()) {
                     $objTeatro = new Teatro();
                     $objTeatro->buscar($row2['idteatro']);
-                    $this->cargar($row2);
+                    $row2['objteatro'] = $objTeatro;
+                    $this->cargarConObj($row2);
                     $resp = true;
                 }
             } else {
@@ -182,8 +193,8 @@ class Funcion
                     $funcion = new Funcion();
                     $objTeatro = new Teatro();
                     $objTeatro->buscar($idTeatro);
-                    $row2[] = ['objteatro' => $objTeatro];
-                    $funcion->cargar($row2);
+                    $row2['objteatro'] = $objTeatro;
+                    $funcion->cargarConObj($row2);
                     array_push($arrFunciones, $funcion);
                 }
             } else {

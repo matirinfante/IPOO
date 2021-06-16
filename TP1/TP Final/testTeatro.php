@@ -41,6 +41,7 @@ function menu()
                 break;
             case 4:
                 echo "//// SALIENDO ////\n";
+                break;
             default:
                 echo "Ingrese una opción válida";
                 break;
