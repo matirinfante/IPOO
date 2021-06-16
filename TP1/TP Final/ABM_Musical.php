@@ -31,15 +31,16 @@ class ABM_Musical
 
     public static function modificarMusical($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro, $director, $cantPersonas)
     {
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'director' => $director, 'cantidad_personas' => $cantPersonas);
+        $teatroVinculado = new Teatro();
+        $teatroVinculado->buscar($idteatro);
         $funcionModificar = new Musical();
+
         if ($funcionModificar->buscar($idfuncion)) {
-            $funcionModificar->setNombre($nombre);
-            $funcionModificar->setHoraInicio($horaInicio);
-            $funcionModificar->setDuracion($duracion);
-            $funcionModificar->setPrecio($precio);
-            $funcionModificar->setDirector($director);
-            $funcionModificar->setCantPersonas($cantPersonas);
-            $funcionModificar->modificar();
+            if ($teatroVinculado->verificarHorario($horaInicio, $duracion)) {
+                $funcionModificar->cargar($arr);
+                $funcionModificar->modificar();
+            }
         }
     }
 }
