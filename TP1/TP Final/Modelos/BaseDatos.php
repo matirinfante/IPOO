@@ -121,11 +121,9 @@ class BaseDatos
         if ($this->RESULT = mysqli_query($this->CONEXION, $consulta)) {
             $id = mysqli_insert_id($this->CONEXION);
             $resp = $id;
-            print ("insertando con id " . $id . "\n");
         } else {
             $this->ERROR = mysqli_errno($this->CONEXION) . ": " . mysqli_error($this->CONEXION);
-            print $this->QUERY;
-            print $this->getError();
+
         }
         return $resp;
     }
