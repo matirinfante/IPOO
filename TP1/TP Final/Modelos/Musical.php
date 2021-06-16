@@ -134,14 +134,16 @@ class Musical extends Funcion
         $base = new BaseDatos();
         $consultaModifica = "UPDATE musical SET director='{$this->getDirector()}', cantidad_personas='{$this->getCantPersonas()}' 
         WHERE idfuncion =" . parent::getIdfuncion();
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($consultaModifica)) {
-                $resp = true;
+        if (parent::modificar()) {
+            if ($base->Iniciar()) {
+                if ($base->Ejecutar($consultaModifica)) {
+                    $resp = true;
+                } else {
+                    $this->setmensajeoperacion($base->getError());
+                }
             } else {
                 $this->setmensajeoperacion($base->getError());
             }
-        } else {
-            $this->setmensajeoperacion($base->getError());
         }
         return $resp;
     }
