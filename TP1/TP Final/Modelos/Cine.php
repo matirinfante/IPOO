@@ -128,16 +128,18 @@ class Cine extends Funcion
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE cine SET genero={'$this->getGenero()}', pais_origen='{$this->getPaisOrigen()}' 
+        if (parent::modificar()) {
+            $consultaModifica = "UPDATE cine SET genero='{$this->getGenero()}', pais_origen='{$this->getPaisOrigen()}' 
         WHERE idfuncion =" . parent::getIdfuncion();
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($consultaModifica)) {
-                $resp = true;
+            if ($base->Iniciar()) {
+                if ($base->Ejecutar($consultaModifica)) {
+                    $resp = true;
+                } else {
+                    $this->setmensajeoperacion($base->getError());
+                }
             } else {
                 $this->setmensajeoperacion($base->getError());
             }
-        } else {
-            $this->setmensajeoperacion($base->getError());
         }
         return $resp;
     }

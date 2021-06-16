@@ -142,7 +142,7 @@ function administrarTeatro(&$unTeatro)
                 mostrarDatos($unTeatro);
                 break;
             case 3:
-                echo "Costo total: {$unTeatro->darCosto()}";
+                echo "Costo total: {$unTeatro->darCosto()}\n";
                 break;
             default:
                 echo "Ingrese una opción correcta\n";
@@ -230,7 +230,7 @@ function modificarDatos(&$unTeatro)
             default:
                 echo "Ingrese una opción correcta\n";
         }
-    } while ($opcionMod <> 3);
+    } while ($opcionMod <> 5);
 }
 
 /**
@@ -336,9 +336,12 @@ function eliminarFuncion(&$unTeatro)
 /**
  * @param $unTeatro
  */
-function modificarFunciones(Teatro &$unTeatro)
+function modificarFunciones(&$unTeatro)
 {
-    $numeroFuncion = -1;
+    $nuevoNombre = "";
+    $precioFuncion = 0;
+    $horaInicio = "";
+    $duracion = 0;
 
     do {
         echo "--- MODIFICAR FUNCIONES ---\n";
@@ -356,7 +359,42 @@ function modificarFunciones(Teatro &$unTeatro)
         if (!is_numeric($precioFuncion)) {
             echo "Ingrese un número.\n";
         }
-    } while (!is_numeric($numeroFuncion));
+    } while (!is_numeric($precioFuncion));
+    do {
+        echo "Ingrese el horario (HH:MM):\n";
+        $horaInicio = trim(fgets(STDIN));
+        if (!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $horaInicio)) {
+            echo "Ingrese un formato de hora válido.\n";
+        }
+    } while (!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $horaInicio));
+
+    do {
+        echo "Ingrese el duracion (en minutos):\n";
+        $duracion = trim(fgets(STDIN));
+        if (!is_numeric($duracion)) {
+            echo "Ingrese un número \n";
+        }
+    } while (!is_numeric($duracion));
+
+    $unaFuncion = $unTeatro->buscarFuncion($idfuncion);
+    switch (get_class($unaFuncion)) {
+        case "Cine":
+            echo "Ingrese el pais de origen:\n";
+            $pais = trim(fgets(STDIN));
+            echo "Ingrese el genero:\n";
+            $genero = trim(fgets(STDIN));
+            ABM_Cine::modificarCine($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $pais, $genero);
+            break;
+        case "Musical":
+            echo "Ingrese el director:\n";
+            $director = trim(fgets(STDIN));
+            echo "Ingrese la cantidad de espectadores:\n";
+            $espectadores = trim(fgets(STDIN));
+            ABM_Musical::modificarMusical($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $director, $espectadores);
+            break;
+        case "FuncionTeatral":
+            ABM_Teatral::modificarTeatral($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion);
+    }
 
 }
 

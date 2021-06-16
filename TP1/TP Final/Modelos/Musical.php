@@ -10,7 +10,7 @@ class Musical extends Funcion
     {
         parent::__construct();
         $this->director = "";
-        $this->cantPersonas = "";
+        $this->cantPersonas = 0;
     }
 
     public function cargar($datos)

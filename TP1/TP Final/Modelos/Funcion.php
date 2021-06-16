@@ -256,7 +256,7 @@ class Funcion
 
     public function __toString()
     {
-        $text = "ID:{$this->idfuncion}\nNombre: {$this->getNombre()}\nPrecio: {$this->getPrecio()}\nHorario: {$this->getHoraInicio()}\nDuración: {$this->getDuracion()}\n";
+        $text = "ID Funcion:{$this->idfuncion}\nNombre: {$this->getNombre()}\nPrecio: {$this->getPrecio()}\nHorario: {$this->getHoraInicio()}\nDuración: {$this->getDuracion()}\n";
 
         return $text;
     }

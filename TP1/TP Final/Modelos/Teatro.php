@@ -210,7 +210,7 @@ class Teatro
      * @param $duracion
      * @return bool
      */
-    private function verificarHorario($horaInicio, $duracion)
+    public function verificarHorario($horaInicio, $duracion)
     {
         $exito = true;
         $horaEnMinutos = $this->aMinutos($horaInicio);
