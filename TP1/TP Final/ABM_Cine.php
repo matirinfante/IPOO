@@ -31,6 +31,7 @@ class ABM_Cine
 
     public static function modificarCine($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro, $genero, $paisOrigen)
     {
+        $exito = false;
         $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'genero' => $genero, 'pais_origen' => $paisOrigen);
         $teatroVinculado = new Teatro();
         $teatroVinculado->buscar($idteatro);
@@ -39,8 +40,9 @@ class ABM_Cine
         if ($funcionModificar->buscar($idfuncion)) {
             if ($teatroVinculado->verificarHorario($horaInicio, $duracion)) {
                 $funcionModificar->cargar($arr);
-                $funcionModificar->modificar();
+                $exito = $funcionModificar->modificar();
             }
         }
+        return $exito;
     }
 }

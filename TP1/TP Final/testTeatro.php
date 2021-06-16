@@ -377,25 +377,29 @@ function modificarFunciones(&$unTeatro)
     } while (!is_numeric($duracion));
 
     $unaFuncion = $unTeatro->buscarFuncion($idfuncion);
+
+    $exito = false;
     switch (get_class($unaFuncion)) {
         case "Cine":
             echo "Ingrese el pais de origen:\n";
             $pais = trim(fgets(STDIN));
             echo "Ingrese el genero:\n";
             $genero = trim(fgets(STDIN));
-            ABM_Cine::modificarCine($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $pais, $genero);
+            $exito = ABM_Cine::modificarCine($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $pais, $genero);
             break;
         case "Musical":
             echo "Ingrese el director:\n";
             $director = trim(fgets(STDIN));
             echo "Ingrese la cantidad de espectadores:\n";
             $espectadores = trim(fgets(STDIN));
-            ABM_Musical::modificarMusical($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $director, $espectadores);
+            $exito = ABM_Musical::modificarMusical($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $director, $espectadores);
             break;
         case "FuncionTeatral":
-            ABM_Teatral::modificarTeatral($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion);
+            $exito = ABM_Teatral::modificarTeatral($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro());
     }
-
+    if (!$exito) {
+        echo "No se modificó la función porque el horario se superponía con una función existente\n";
+    }
 }
 
 /**

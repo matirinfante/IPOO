@@ -29,15 +29,19 @@ class ABM_Teatral
         }
     }
 
-    public static function modificarTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio)
+    public static function modificarTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro)
     {
+        $exito = false;
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro);
+        $teatroVinculado = new Teatro();
+        $teatroVinculado->buscar($idteatro);
         $funcionModificar = new FuncionTeatral();
         if ($funcionModificar->buscar($idfuncion)) {
-            $funcionModificar->setNombre($nombre);
-            $funcionModificar->setHoraInicio($horaInicio);
-            $funcionModificar->setDuracion($duracion);
-            $funcionModificar->setPrecio($precio);
-            $funcionModificar->modificar();
+            if ($teatroVinculado->verificarHorario($horaInicio, $duracion)) {
+                $funcionModificar->cargar($arr);
+                $exito = $funcionModificar->modificar();
+            }
         }
+        return $exito;
     }
 }
