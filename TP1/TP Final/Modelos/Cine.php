@@ -84,7 +84,7 @@ class Cine extends Funcion
     {
         $arrCine = null;
         $base = new BaseDatos();
-        $consultaFuncion = "SELECT * FROM cine c, funcion f";
+        $consultaFuncion = "SELECT * FROM funcion INNER JOIN cine c on funcion.idfuncion = c.idfuncion";
         if ($condicion != "") {
             $consultaFuncion = "{$consultaFuncion} WHERE {$condicion}";
         }
@@ -93,7 +93,7 @@ class Cine extends Funcion
                 $arrCine = array();
                 while ($row2 = $base->Registro()) {
                     $objCine = new Cine();
-                    $objCine->cargar($row2);
+                    $objCine->buscar($row2['idfuncion']);
                     array_push($arrCine, $objCine);
                 }
             } else {

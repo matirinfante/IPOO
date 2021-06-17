@@ -43,7 +43,7 @@ class FuncionTeatral extends Funcion
     {
         $arrCine = null;
         $base = new BaseDatos();
-        $consultaFuncion = "SELECT * FROM funcionteatral t, funcion f";
+        $consultaFuncion = "SELECT * FROM funcion INNER JOIN funcionteatral c on funcion.idfuncion = c.idfuncion";
         if ($condicion != "") {
             $consultaFuncion = "{$consultaFuncion} WHERE {$condicion}";
         }
@@ -52,7 +52,7 @@ class FuncionTeatral extends Funcion
                 $arrCine = array();
                 while ($row2 = $base->Registro()) {
                     $objCine = new FuncionTeatral();
-                    $objCine->cargar($row2);
+                    $objCine->buscar($row2['idfuncion']);
                     array_push($arrCine, $objCine);
                 }
             } else {

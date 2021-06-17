@@ -289,21 +289,21 @@ function agregarFuncion(&$unTeatro, $idteatro)
     } while (!is_numeric($duracion));
     switch ($tipo) {
         case "teatro":
-            $idInsertado = ABM_Teatral::altaTeatral(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $idteatro);
+            $idInsertado = ABM_Teatral::altaTeatral(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $unTeatro);
             break;
         case "cine":
             echo "Ingrese el pais de origen:\n";
             $pais = trim(fgets(STDIN));
             echo "Ingrese el genero:\n";
             $genero = trim(fgets(STDIN));
-            $idInsertado = ABM_Cine::altaCine(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $idteatro, $genero, $pais);
+            $idInsertado = ABM_Cine::altaCine(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $unTeatro, $genero, $pais);
             break;
         case "musical":
             echo "Ingrese el director:\n";
             $director = trim(fgets(STDIN));
             echo "Ingrese la cantidad de espectadores:\n";
             $espectadores = trim(fgets(STDIN));
-            $idInsertado = ABM_Musical::altaMusical(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $idteatro, $director, $espectadores);
+            $idInsertado = ABM_Musical::altaMusical(0, $nombreFuncion, $horaInicio, $duracion, $precioFuncion, $unTeatro, $director, $espectadores);
             break;
     }
     if ($idInsertado == -1) {
@@ -386,17 +386,17 @@ function modificarFunciones(&$unTeatro)
             $pais = trim(fgets(STDIN));
             echo "Ingrese el genero:\n";
             $genero = trim(fgets(STDIN));
-            $exito = ABM_Cine::modificarCine($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $pais, $genero);
+            $exito = ABM_Cine::modificarCine($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro, $pais, $genero);
             break;
         case "Musical":
             echo "Ingrese el director:\n";
             $director = trim(fgets(STDIN));
             echo "Ingrese la cantidad de espectadores:\n";
             $espectadores = trim(fgets(STDIN));
-            $exito = ABM_Musical::modificarMusical($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro(), $director, $espectadores);
+            $exito = ABM_Musical::modificarMusical($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro, $director, $espectadores);
             break;
         case "FuncionTeatral":
-            $exito = ABM_Teatral::modificarTeatral($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro->getIdTeatro());
+            $exito = ABM_Teatral::modificarTeatral($idfuncion, $nuevoNombre, $horaInicio, $duracion, $precioFuncion, $unTeatro);
     }
     if (!$exito) {
         echo "No se modificó la función porque el horario se superponía con una función existente\n";

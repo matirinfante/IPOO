@@ -88,7 +88,7 @@ class Musical extends Funcion
     {
         $arrMusical = null;
         $base = new BaseDatos();
-        $consultaFuncion = "SELECT * FROM musical m, funcion f";
+        $consultaFuncion = "SELECT * FROM funcion INNER JOIN musical c on funcion.idfuncion = c.idfuncion";
         if ($condicion != "") {
             $consultaFuncion = "{$consultaFuncion} WHERE {$condicion}";
         }
@@ -97,7 +97,7 @@ class Musical extends Funcion
                 $arrMusical = array();
                 while ($row2 = $base->Registro()) {
                     $objMusical = new Musical();
-                    $objMusical->cargar($row2);
+                    $objMusical->buscar($row2['idfuncion']);
                     array_push($arrMusical, $objMusical);
                 }
             } else {

@@ -4,20 +4,20 @@ require_once 'Modelos/FuncionTeatral.php';
 
 class ABM_Teatral
 {
-    public static function altaTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro)
+    public static function altaTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, &$unTeatro)
     {
         $idInsercion = -1;
-        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro);
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'objteatro' => $unTeatro);
         $nuevoTeatral = new FuncionTeatral();
         $nuevoTeatral->cargar($arr);
 
         $teatroVinculado = new Teatro();
-        if ($teatroVinculado->buscar($idteatro)) {
-            if ($teatroVinculado->insertarFuncion($nuevoTeatral)) {
-                $nuevoTeatral->insertar();
-                $idInsercion = $nuevoTeatral->getIdfuncion();
-            }
+
+        if ($teatroVinculado->insertarFuncion($nuevoTeatral)) {
+            $nuevoTeatral->insertar();
+            $idInsercion = $nuevoTeatral->getIdfuncion();
         }
+
         return $idInsercion;
     }
 
@@ -29,12 +29,12 @@ class ABM_Teatral
         }
     }
 
-    public static function modificarTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro)
+    public static function modificarTeatral($idfuncion, $nombre, $horaInicio, $duracion, $precio, $unTeatro)
     {
         $exito = false;
-        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro);
-        $teatroVinculado = new Teatro();
-        $teatroVinculado->buscar($idteatro);
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'unTeatro' => $unTeatro);
+        $teatroVinculado = $unTeatro;
+
         $funcionModificar = new FuncionTeatral();
         if ($funcionModificar->buscar($idfuncion)) {
             if ($teatroVinculado->verificarHorario($horaInicio, $duracion)) {

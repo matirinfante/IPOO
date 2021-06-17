@@ -34,7 +34,7 @@ class Funcion
         $this->setHoraInicio($datos['hora_inicio']);
         $this->setDuracion($datos['duracion']);
         $this->setPrecio($datos['precio']);
-        $this->setObjTeatro($datos['idteatro']);
+        $this->setObjTeatro($datos['objteatro']);
     }
 
     public function cargarConObj($datos)
@@ -189,12 +189,8 @@ class Funcion
                 $arrFunciones = array();
                 while ($row2 = $base->Registro()) {
                     $idTeatro = $row2['idteatro'];
-
                     $funcion = new Funcion();
-                    $objTeatro = new Teatro();
-                    $objTeatro->buscar($idTeatro);
-                    $row2['objteatro'] = $objTeatro;
-                    $funcion->cargarConObj($row2);
+                    $funcion->buscar($row2['idfuncion']);
                     array_push($arrFunciones, $funcion);
                 }
             } else {
@@ -210,13 +206,13 @@ class Funcion
     {
         $base = new BaseDatos();
         $resp = false;
-        $consultaInsertar = "INSERT INTO funcion VALUES(null,'{$this->getNombre()}','{$this->getHoraInicio()}',{$this->getDuracion()},{$this->getPrecio()},{$this->getObjTeatro()})";
+        $consultaInsertar = "INSERT INTO funcion VALUES(null,'{$this->getNombre()}','{$this->getHoraInicio()}',{$this->getDuracion()},{$this->getPrecio()},{$this->getObjTeatro()->getIdTeatro()})";
         if ($base->Iniciar()) {
             if ($id = $base->devuelveIDInsercion($consultaInsertar)) {
                 $this->setIdfuncion($id);
-                $teatroVinculado = new Teatro();
-                $teatroVinculado->buscar($this->getObjTeatro());
-                $this->setObjTeatro($teatroVinculado);
+                //$teatroVinculado = new Teatro();
+                //$teatroVinculado->buscar($this->getObjTeatro());
+                //$this->setObjTeatro($teatroVinculado);
                 $resp = true;
             } else {
                 $this->setmensajeoperacion($base->getError());

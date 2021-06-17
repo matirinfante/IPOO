@@ -4,20 +4,19 @@ require_once('Modelos/Cine.php');
 
 class ABM_Cine
 {
-    public static function altaCine($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro, $genero, $paisOrigen)
+    public static function altaCine($idfuncion, $nombre, $horaInicio, $duracion, $precio, &$unTeatro, $genero, $paisOrigen)
     {
         $idInsertado = -1;
-        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'genero' => $genero, 'pais_origen' => $paisOrigen);
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'objteatro' => $unTeatro, 'genero' => $genero, 'pais_origen' => $paisOrigen);
         $nuevoCine = new Cine();
         $nuevoCine->cargar($arr);
-        $teatroVinculado = new Teatro();
+        $teatroVinculado = $unTeatro;
 
-        if ($teatroVinculado->buscar($idteatro)) {
-            if ($teatroVinculado->insertarFuncion($nuevoCine)) {
-                $nuevoCine->insertar();
-                $idInsertado = $nuevoCine->getIdfuncion();
-            }
+        if ($teatroVinculado->insertarFuncion($nuevoCine)) {
+            $nuevoCine->insertar();
+            $idInsertado = $nuevoCine->getIdfuncion();
         }
+
         return $idInsertado;
     }
 
@@ -29,12 +28,11 @@ class ABM_Cine
         }
     }
 
-    public static function modificarCine($idfuncion, $nombre, $horaInicio, $duracion, $precio, $idteatro, $genero, $paisOrigen)
+    public static function modificarCine($idfuncion, $nombre, $horaInicio, $duracion, $precio, &$unTeatro, $genero, $paisOrigen)
     {
         $exito = false;
-        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'idteatro' => $idteatro, 'genero' => $genero, 'pais_origen' => $paisOrigen);
-        $teatroVinculado = new Teatro();
-        $teatroVinculado->buscar($idteatro);
+        $arr = array('idfuncion' => $idfuncion, 'nombre' => $nombre, 'hora_inicio' => $horaInicio, 'duracion' => $duracion, 'precio' => $precio, 'objteatro' => $unTeatro, 'genero' => $genero, 'pais_origen' => $paisOrigen);
+        $teatroVinculado = $unTeatro;
         $funcionModificar = new Cine();
 
         if ($funcionModificar->buscar($idfuncion)) {
