@@ -229,7 +229,7 @@ class Funcion
     {
         $resp = false;
         $base = new BaseDatos();
-        $consultaModifica = "UPDATE funcion SET nombre='{$this->getNombre()}',hora_inicio='{$this->getHoraInicio()}',duracion={$this->getDuracion()},precio={$this->getPrecio()} 
+        $consultaModifica = "UPDATE funcion SET nombre='{$this->getNombre()}',hora_inicio='{$this->getHoraInicio()}',duracion={$this->getDuracion()},precio={$this->getPrecio()}, idteatro={$this->getObjTeatro()->getIdTeatro()} 
         WHERE idfuncion = {$this->getIdfuncion()}";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($consultaModifica)) {
